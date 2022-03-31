@@ -29,29 +29,87 @@ function playRound(playerSelection, computerSelection) {
     } else {
         return "You Lose! Rock beats Scissors";
     }
-}
-  
-
+}    
+    
 function game() {
-    let score = 0;
-    
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Please enter your move: (rock, paper, scissors)");
-        const computerSelection = computerPlay();
-        let result = playRound(playerSelection, computerSelection);
-        if (result.startsWith("You Win") === true) {
-            score++;
+        let score = 0;
+        
+        for (let i = 0; i < 5; i++) {
+            const playerSelection = prompt("Please enter your move: (rock, paper, scissors)");
+            const computerSelection = computerPlay();
+            let result = playRound(playerSelection, computerSelection);
+            if (result.startsWith("You Win") === true) {
+                score++;
+            }
+            console.log(result);
         }
-        console.log(result);
-    }
-
-    console.log("\n");
     
-    if (score > 2) {
-        console.log("You won the game!");
-    } else {
-        console.log("Oh no! You lost...");
-    }
+        console.log("\n");
+        
+        if (score > 2) {
+            console.log("You won the game!");
+        } else {
+            console.log("Oh no! You lost...");
+        }
 }
 
-game();
+let score = 0;
+
+
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+const latest = document.querySelector('#latest');
+const scoreDiv = document.querySelector('#score')
+
+rock.addEventListener('click', function(e) {
+    const computerSelection = computerPlay();
+    const playerSelection = e.target.value;
+
+    let result = playRound(playerSelection, computerSelection);
+    latest.innerHTML = `${result}`;
+    if (result.startsWith("You Win")) {
+        score += 1;
+    }
+
+    if (score === 5) {
+        scoreDiv.innerHTML = `Score: ${score+1}`;
+        alert("You won!");
+        score = 0;
+    }
+    scoreDiv.innerHTML = `Score: ${score}`;
+});
+
+paper.addEventListener('click', function(e) {
+    const computerSelection = computerPlay();
+    const playerSelection = e.target.value;
+
+    let result = playRound(playerSelection, computerSelection);
+    latest.innerHTML = `${result}`;
+    if (result.startsWith("You Win")) {
+        score += 1;
+    }
+
+    if (score === 5) {
+        alert("You won!");
+        score = 0;
+    }
+    scoreDiv.innerHTML = `Score: ${score}`;
+});
+
+scissors.addEventListener('click', function(e) {
+    const computerSelection = computerPlay();
+    const playerSelection = e.target.value;
+
+    let result = playRound(playerSelection, computerSelection);
+    latest.innerHTML = `${result}`;
+    if (result.startsWith("You Win")) {
+        score += 1;
+    }
+
+    if (score === 5) {
+        alert("You won!");
+        score = 0;
+    }
+    scoreDiv.innerHTML = `Score: ${score}`;
+});
